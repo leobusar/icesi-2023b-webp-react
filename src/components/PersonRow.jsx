@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@mui/material'
 
 function PersonRow({person}) {
   return (
-    <TableRow key={person.id}> 
+    <TableRow> 
       <TableCell>{person.id}</TableCell>
       <TableCell>{person.name}</TableCell>
       <TableCell>{person.username}</TableCell>

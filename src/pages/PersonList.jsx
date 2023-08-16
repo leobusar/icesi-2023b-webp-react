@@ -1,6 +1,8 @@
 import personList from  '../data/person.json'
 import { useState } from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody,Paper } from '@mui/material';
+import PersonRow from '../components/PersonRow';
+import PersonForm from '../components/PersonForm';
 
 function PersonList() {
   const [persons, setPersons] = useState(personList);
@@ -8,16 +10,17 @@ function PersonList() {
 
   const renderPersons = () => {
     return persons.map((person) =>
-    (<TableRow key={person.id}> 
-      <TableCell>{person.id}</TableCell>
-      <TableCell>{person.name}</TableCell>
-      <TableCell>{person.username}</TableCell>
-      <TableCell>{person.email}</TableCell>
-    </TableRow> )
+    (<PersonRow key={person.id} person={person} />)
     )
   }
 
+  const  addPerson = (person) => {
+     persons.add(person)
+     setPersons(persons)
+  }
   return (
+    <>
+    <PersonForm />
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -33,6 +36,8 @@ function PersonList() {
         </TableBody>
       </Table>
     </TableContainer>
+    </>
+
   )
 }
 
