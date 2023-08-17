@@ -1,17 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Button, TextField } from '@mui/material'
 
-function PersonForm(props) {
+function PersonForm({onAddPerson, person}) {
     const [id, setId] = useState("")
     const [username, setUsername] = useState("")
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
+
+    useEffect(()=>{
+        setId(person.id)
+        setUsername(person.username)
+        setName(person.name)
+        setEmail(person.email) 
+    }
+    ,[person])
     
     const handleClick = () => {
-        console.log("name:", name)
-        console.log("username:", username)
-        console.log("email:", email)
+        
+        let person = {id, name, username, email}
+
+        onAddPerson(person)
         setUsername("")
         setName("")
         setEmail("")
@@ -47,6 +56,9 @@ function PersonForm(props) {
   )
 }
 
-PersonForm.propTypes = {}
+PersonForm.propTypes = {
+    onAddPerson: PropTypes.func.isRequired,
+    person: PropTypes.object.isRequired,
+}
 
 export default PersonForm
