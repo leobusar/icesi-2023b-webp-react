@@ -1,30 +1,52 @@
-import personList from  '../data/person.json'
-import { useState } from 'react';
+//import personList from  '../data/person.json'
+import { useEffect, useState } from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody,Paper } from '@mui/material';
 import PersonRow from '../components/PersonRow';
 import PersonForm from '../components/PersonForm';
+import axios from "../config/axios";
+
 
 function PersonList() {
-  const [persons, setPersons] = useState(personList);
-  const [personEdit, setPersonEdit] = useState({})
+  const [persons, setPersons] = useState([]);
+  const [personEdit, setPersonEdit] = useState({id: ""})
 
+  const getPersons = async () => {
+    try {
+      const response = await axios.get("/person")
+      setPersons(response.data)
+    }catch (e) {
+      console.log(e)
+    }
+  };
+
+  useEffect(()=> {getPersons()},[])
+  
   const renderPersons = () => {
     return persons.map((person) =>
     (<PersonRow key={person.id} person={person} onDelPerson={delPerson} onEditPerson={editPerson}/>)
     )
   }
 
-  const  addPerson = (person) => {
+  const  addPerson = async (person) => {
      console.log(person)
-     let personsTmp = [...persons]
+    // let personsTmp = [...persons]
      if (person.id ==""){
-       person.id= Math.floor(Math.random()*100000)
-       personsTmp.push(person)
+       person.id= Math.floor(Math.random()*100000);
+      //  axios.post("/person", person).then( () =>
+      //     {getPersons()}
+      //  );
+      const res = await axios.post("/person", person)
+      if(res.status === 201)
+          getPersons()
+       //personsTmp.push(person)
      }else{
-       let index = personsTmp.findIndex((p)=>person.id===p.id)
-       personsTmp[index] = person
+      //  let index = personsTmp.findIndex((p)=>person.id===p.id)
+      //  personsTmp[index] = person
+      const res = await axios.put("/person/"+person.id, person)
+      if(res.status === 200)
+          getPersons()      
      }
-     setPersons(personsTmp)
+     //setPersons(personsTmp)
   }
 
   const delPerson = (id) => {
