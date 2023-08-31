@@ -49,8 +49,11 @@ function PersonList() {
      //setPersons(personsTmp)
   }
 
-  const delPerson = (id) => {
-    setPersons(persons.filter((person)=> person.id!=id))
+  const delPerson = async (id) => {
+    //setPersons(persons.filter((person)=> person.id!=id))
+    const res = await axios.delete("/person/"+id)
+    if(res.status === 200)
+        getPersons()   
   }
 
   const editPerson = (person) => {
