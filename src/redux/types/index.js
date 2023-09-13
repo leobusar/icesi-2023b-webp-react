@@ -1,0 +1,1 @@
+export const SET_PERSON_EDIT = "SET PERSON EDIT";

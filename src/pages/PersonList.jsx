@@ -4,11 +4,15 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody,Paper 
 import PersonRow from '../components/PersonRow';
 import PersonForm from '../components/PersonForm';
 import axios from "../config/axios";
+import {useDispatch} from  '../react-redux'
+import { setPersonEdit } from '../redux/reducers/PersonSlice';
 
 
 function PersonList() {
   const [persons, setPersons] = useState([]);
   const [personEdit, setPersonEdit] = useState({id: ""})
+
+  const  dispatch = useDispatch()
 
   const getPersons = async () => {
     try {
@@ -57,12 +61,12 @@ function PersonList() {
   }
 
   const editPerson = (person) => {
-    setPersonEdit(person)
+    dispatch(setPersonEdit(person))
   }
 
   return (
     <>
-    <PersonForm onAddPerson={addPerson} person={personEdit}/>
+    <PersonForm onAddPerson={addPerson}/>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
