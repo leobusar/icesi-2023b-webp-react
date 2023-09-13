@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Button, TextField } from '@mui/material'
+import { PersonContext } from '../context/PersonContext'
 
-function PersonForm({onAddPerson, person}) {
+function PersonForm({onAddPerson}) {
     const [id, setId] = useState("")
     const [username, setUsername] = useState("")
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
+    const {personEdit, setPersonEdit} = useContext(PersonContext)
 
     useEffect(()=>{
-        setId(person.id)
-        setUsername(person.username)
-        setName(person.name)
-        setEmail(person.email) 
+        setId(personEdit.id)
+        setUsername(personEdit.username)
+        setName(personEdit.name)
+        setEmail(personEdit.email) 
     }
-    ,[person])
+    ,[personEdit])
     
     const handleClick = () => {
         
         let person = {id, name, username, email}
 
         onAddPerson(person)
-        setUsername("")
-        setName("")
-        setEmail("")
+        setPersonEdit({id: "", name: "", username:"", email:""})
+
     }
 
   return (
@@ -57,8 +58,7 @@ function PersonForm({onAddPerson, person}) {
 }
 
 PersonForm.propTypes = {
-    onAddPerson: PropTypes.func.isRequired,
-    person: PropTypes.object.isRequired,
+    onAddPerson: PropTypes.func.isRequired
 }
 
 export default PersonForm
