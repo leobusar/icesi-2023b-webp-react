@@ -4,11 +4,11 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody,Paper 
 import PersonRow from '../components/PersonRow';
 import PersonForm from '../components/PersonForm';
 import axios from "../config/axios";
-
+import { PersonContext } from '../context/PersonContext';
 
 function PersonList() {
   const [persons, setPersons] = useState([]);
-  const [personEdit, setPersonEdit] = useState({id: ""})
+  const [personEdit, setPersonEdit] = useState({id: "", name: "", username:"", email:""})
 
   const getPersons = async () => {
     try {
@@ -30,7 +30,7 @@ function PersonList() {
   const  addPerson = async (person) => {
      console.log(person)
     // let personsTmp = [...persons]
-     if (person.id ==""){
+     if (person.id ===""){
        person.id= Math.floor(Math.random()*100000);
       //  axios.post("/person", person).then( () =>
       //     {getPersons()}
@@ -61,25 +61,25 @@ function PersonList() {
   }
 
   return (
-    <>
-    <PersonForm onAddPerson={addPerson} person={personEdit}/>
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Username</TableCell>
-            <TableCell>email</TableCell>
-            <TableCell>actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {renderPersons()}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </>
+    <PersonContext.Provider value={{personEdit, setPersonEdit}}>
+      <PersonForm onAddPerson={addPerson} />
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Username</TableCell>
+              <TableCell>email</TableCell>
+              <TableCell>actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {renderPersons()}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </PersonContext.Provider>
 
   )
 }

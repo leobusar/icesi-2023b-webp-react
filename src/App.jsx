@@ -1,13 +1,12 @@
 import './App.css'
-import PersonList from './pages/PersonList'
+//import PersonList from './pages/PersonList'
+import Router from  './routes'
 
 
 function App() {
 
   return (
-    <>
-      <PersonList />
-    </>
+    <Router />
   )
 }
 
