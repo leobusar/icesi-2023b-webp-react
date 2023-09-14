@@ -1,14 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Button, TextField } from '@mui/material'
-import { PersonContext } from '../context/PersonContext'
+//import { PersonContext } from '../context/PersonContext'
+import { useSelector, useDispatch } from 'react-redux';
+import { setPersonEdit } from '../redux/reducers/personSlice';
 
 function PersonForm({onAddPerson}) {
     const [id, setId] = useState("")
     const [username, setUsername] = useState("")
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
-    const {personEdit, setPersonEdit} = useContext(PersonContext)
+    const  dispatch = useDispatch()
+
+    //const {personEdit, setPersonEdit} = useContext(PersonContext)
+    
+    const personEdit = useSelector(state=>state.person.personEdit)
 
     useEffect(()=>{
         setId(personEdit.id)
@@ -23,7 +29,7 @@ function PersonForm({onAddPerson}) {
         let person = {id, name, username, email}
 
         onAddPerson(person)
-        setPersonEdit({id: "", name: "", username:"", email:""})
+        dispatch(setPersonEdit({id: "", name: "", username:"", email:""}))
 
     }
 

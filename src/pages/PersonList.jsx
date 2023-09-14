@@ -4,15 +4,15 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody,Paper 
 import PersonRow from '../components/PersonRow';
 import PersonForm from '../components/PersonForm';
 import axios from "../config/axios";
-import {useDispatch} from  '../react-redux'
-import { setPersonEdit } from '../redux/reducers/PersonSlice';
+import {useDispatch} from  'react-redux'
+import { setPersonEdit } from '../redux/reducers/personSlice';
 
 //import { PersonContext } from '../context/PersonContext';
 
 
 function PersonList() {
   const [persons, setPersons] = useState([]);
-  const [personEdit, setPersonEdit] = useState({id: "", name: "", username:"", email:""})
+//  const [personEdit, setPersonEdit] = useState({id: "", name: "", username:"", email:""})
 
   const  dispatch = useDispatch()
 
@@ -59,7 +59,8 @@ function PersonList() {
     //setPersons(persons.filter((person)=> person.id!=id))
     const res = await axios.delete("/person/"+id)
     if(res.status === 200)
-        getPersons()   
+        getPersons()
+    dispatch(setPersonEdit({id: "", name: "", username:"", email:""}))
   }
 
   const editPerson = (person) => {

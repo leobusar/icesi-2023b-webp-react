@@ -1,1 +1,1 @@
-export {default as PersonSlice}  from  './PersonSlice'
+export {default as PersonReducer}  from  './personSlice'

@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { PersonSlice } from '../reducers'
+import personReducer from '../reducers/personSlice'
 
 const store = configureStore({
   reducer: {
-    person: PersonSlice,
+    person: personReducer,
   }
 })
 
